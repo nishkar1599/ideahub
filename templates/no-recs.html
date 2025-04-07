@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>No Recommendations Found</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 800px;
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      color: #555;
+      font-size: 1rem;
+      margin-bottom: 30px;
+    }
+
+    .button {
+      background-color: #ff8c42;
+      color: white;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    .button:hover {
+      background-color: #ff6b00;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1 class="title">Oops! No Recommendations Found 😢</h1>
+      <p class="message">We currently don't have any project ideas for <strong>{{ topic }}</strong> at the <strong>{{ difficulty }}</strong> difficulty level.</p>
+      <p class="message">We'd love your help! Share your amazing project ideas along with YouTube or GitHub links for other users.</p>
+      <div class="button-group">
+      <a href="/" class="button">Go Back Home</a>
+      <a href="/share-project" class="button">Share My Project</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

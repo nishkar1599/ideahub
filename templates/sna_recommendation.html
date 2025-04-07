@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SNA-Based Recommendations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fcd964, #f88794);
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        select, button {
+            padding: 12px;
+            width: 100%;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #7c5fff;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #5b44cc;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            flex: 1 1 calc(33% - 20px);
+            padding: 20px;
+            min-width: 280px;
+        }
+
+        .card h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #7c5fff;
+        }
+
+        .recommendation-item {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .recommendation-item .title {
+            font-weight: 600;
+        }
+
+        .metrics {
+            font-size: 13px;
+            color: #666;
+            margin: 4px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 11px;
+            border-radius: 8px;
+            margin-left: 6px;
+            color: white;
+        }
+
+        .high { background-color: #00c853; }     /* green */
+        .medium { background-color: #ffa000; }   /* amber */
+        .low { background-color: #e53935; }      /* red */
+
+        .recommendation-item a {
+            color: #7c5fff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .recommendation-item a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+            .card {
+                flex: 1 1 100%;
+            }
+        }
+
+        .graph-toggle {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        #graph-container {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #graph-container img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <script>
+        function toggleGraph() {
+            const graph = document.getElementById("graph-container");
+            graph.style.display = graph.style.display === "none" ? "block" : "none";
+        }
+
+        function getBadgeClass(centrality) {
+            if (centrality >= 0.05) return "high";
+            else if (centrality >= 0.01) return "medium";
+            else return "low";
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🔗 SNA–Based Recommendations</h1>
+
+        {% if not deg_recommendations %}
+        <form method="POST">
+            <label for="project">Choose a Project:</label>
+            <select name="project" id="project">
+                {% for title in titles %}
+                    <option value="{{ title }}">{{ title }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Get Recommendations</button>
+        </form>
+        {% endif %}
+    </div>
+
+    {% if deg_recommendations %}
+    <div class="card-container">
+
+        <!-- Degree Centrality Card -->
+        <div class="card">
+            <h2>Degree Centrality</h2>
+            {% for rec in deg_recommendations %}
+            <div class="recommendation-item">
+                <div class="title">
+                    {{ rec.title }}
+                    {% if rec.centrality >= 0.05 %}
+                        <span class="badge high">⭐ High Impact</span>
+                    {% elif rec.centrality >= 0.01 %}
+                        <span class="badge medium">🔥 Medium</span>
+                    {% else %}
+                        <span class="badge low">🧊 Low</span>
+                    {% endif %}
+                </div>
+                <div class="metrics">Centrality: {{ rec.centrality }} | Weight: {{ rec.weight }}</div>
+                <a href="{{ rec.github }}" target="_blank">GitHub</a> |
+                <a href="{{ rec.youtube }}" target="_blank">YouTube</a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Betweenness Centrality Card -->
+        <div class="card">
+            <h2>Betweenness Centrality</h2>
+            {% for rec in btw_recommendations %}
+            <div class="recommendation-item">
+                <div class="title">
+                    {{ rec.title }}
+                    {% if rec.centrality >= 0.05 %}
+                        <span class="badge high">⭐ High Impact</span>
+                    {% elif rec.centrality >= 0.01 %}
+                        <span class="badge medium">🔥 Medium</span>
+                    {% else %}
+                        <span class="badge low">🧊 Low</span>
+                    {% endif %}
+                </div>
+                <div class="metrics">Centrality: {{ rec.centrality }} | Weight: {{ rec.weight }}</div>
+                <a href="{{ rec.github }}" target="_blank">GitHub</a> |
+                <a href="{{ rec.youtube }}" target="_blank">YouTube</a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Eigenvector Centrality Card -->
+        <div class="card">
+            <h2>Eigenvector Centrality</h2>
+            {% for rec in eig_recommendations %}
+            <div class="recommendation-item">
+                <div class="title">
+                    {{ rec.title }}
+                    {% if rec.centrality >= 0.05 %}
+                        <span class="badge high">⭐ High Impact</span>
+                    {% elif rec.centrality >= 0.01 %}
+                        <span class="badge medium">🔥 Medium</span>
+                    {% else %}
+                        <span class="badge low">🧊 Low</span>
+                    {% endif %}
+                </div>
+                <div class="metrics">Centrality: {{ rec.centrality }} | Weight: {{ rec.weight }}</div>
+                <a href="{{ rec.github }}" target="_blank">GitHub</a> |
+                <a href="{{ rec.youtube }}" target="_blank">YouTube</a>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <div style="text-align:center; margin-top: 30px;">
+      <a href="{{ url_for('sna_graph') }}">
+          <button style="background-color: #5b44cc; padding: 12px 24px; font-size: 16px; color: white; border: none; border-radius: 10px; cursor: pointer;">
+              📊 Show the Graph
+          </button>
+      </a>
+  </div>
+
+
+    {% endif %}
+
+</body>
+</html>

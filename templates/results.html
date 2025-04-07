@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IdeaHub - Recommendations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+
+        .project-list {
+            margin-top: 30px;
+        }
+
+        .project-item {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: transform 0.2s ease;
+        }
+
+        .project-item:hover {
+            transform: scale(1.02);
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #222;
+        }
+
+        .links a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #007BFF;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .links a:hover {
+            background-color: #0056b3;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #ff8c42;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #ff6b00;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #555;
+            font-size: 1.1rem;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Recommended Project Ideas</h1>
+
+        {% if projects %}
+        <div class="project-list">
+            {% for project in projects %}
+            <div class="project-item">
+                <div class="project-title">{{ project['Title'] }}</div>
+                <div class="links">
+                    <a href="{{ project['GitHub Link'] }}" target="_blank">GitHub</a>
+                    <a href="{{ project['YouTube Link'] }}" target="_blank">YouTube</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-results">
+            No projects found for the selected domain and difficulty. Please try again!
+        </div>
+        {% endif %}
+
+        <a href="/" class="back-btn">🔙 Back to Search</a>
+    </div>
+</body>
+</html>

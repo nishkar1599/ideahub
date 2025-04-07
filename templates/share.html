@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 800px;
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    input[type="text"], textarea, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+    }
+
+    .button {
+      background-color: #ff8c42;
+      color: white;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    .button:hover {
+      background-color: #ff6b00;
+    }
+  </style>
+  <title>Share Your Project</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Share Your Project</h1>
+    <form action="/share-project" method="POST">
+      <input type="text" name="project_title" placeholder="Project Title" required />
+      <input type="text" name="topic" placeholder="Project Topic" required />
+      <select name="difficulty" required>
+        <option value="" disabled selected>Select Difficulty</option>
+        <option value="Beginner">Beginner</option>
+        <option value="Intermediate">Intermediate</option>
+        <option value="Advanced">Advanced</option>
+      </select>
+      <textarea name="description" rows="4" placeholder="Brief Description of the Project" required></textarea>
+      <input type="text" name="youtube_link" placeholder="YouTube Link (Optional)" />
+      <input type="text" name="github_link" placeholder="GitHub Link (Optional)" />
+      <button type="submit" class="button">Submit Project</button>
+    </form>
+  </div>
+</body>
+</html>

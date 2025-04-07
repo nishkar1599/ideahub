@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SNA Graph Visualization</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fcd964, #f88794);
+            padding: 40px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #7c5fff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>📈 Project Relationship Graph</h1>
+    <img src="data:image/png;base64,{{ graph_url }}" alt="SNA Graph">
+    <br>
+    <a href="{{ url_for('sna_recommendation') }}">⬅️ Back to Recommendations</a>
+</body>
+</html>
