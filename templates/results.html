@@ -60,6 +60,14 @@
             color: #222;
         }
 
+        .project-description {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 5px;
+            padding-bottom: 10%;
+
+        }
+
         .links a {
             margin-right: 15px;
             text-decoration: none;
@@ -106,6 +114,7 @@
             {% for project in projects %}
             <div class="project-item">
                 <div class="project-title">{{ project['Title'] }}</div>
+                <p class="project-description">{{ project['Description'] }}</p>
                 <div class="links">
                     <a href="{{ project['GitHub Link'] }}" target="_blank">GitHub</a>
                     <a href="{{ project['YouTube Link'] }}" target="_blank">YouTube</a>
