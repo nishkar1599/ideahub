@@ -179,7 +179,7 @@ def sna_recommendation():
             ]
             # Sort by centrality descending
             recommendations = sorted(recommendations, key=lambda x: x['centrality'], reverse=True)
-            return recommendations[:5]  # Limit to top 5
+            return recommendations[:10]  # Limit to top 5
 
         if selected in G:
             deg_recommendations = build_recommendations(degree_centrality)
