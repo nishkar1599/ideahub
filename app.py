@@ -134,7 +134,12 @@ def build_graph(df):
 
 G = build_graph(df)
 degree_centrality = nx.degree_centrality(G)
-betweenness_centrality = nx.betweenness_centrality(G)
+# Invert weights to treat stronger similarity as shorter path
+for u, v, d in G.edges(data=True):
+  d['inv_weight'] = 1 / d['weight']
+
+betweenness_centrality = nx.betweenness_centrality(G, weight='inv_weight')
+
 eigenvector_centrality = nx.eigenvector_centrality(G)
 
 @app.route('/')
@@ -207,11 +212,11 @@ def sna_recommendation():
 
 @app.route('/sna-graph')
 def sna_graph():
-    plt.figure(figsize=(14, 10))
+    plt.figure(figsize=(16, 12))  # Increased figure size
     plt.clf()  # Clear any existing plots
 
     # Create graph with only project nodes
-    pos = nx.spring_layout(G, k=0.4)
+    pos = nx.spring_layout(G, k=1.5, iterations=50)  # Increased k for more spread, more iterations
 
     # Filter to ensure we only have project nodes
     project_nodes = [node for node in G.nodes() if node in df['Title'].values]
@@ -219,17 +224,27 @@ def sna_graph():
     # Create subgraph with only project nodes
     project_graph = G.subgraph(project_nodes)
 
-    # Draw only project nodes
-    nx.draw(project_graph, pos,
-            labels={node: node for node in project_nodes},
-            node_size=900,
-            font_size=8,
-            node_color="#7c5fff",
-            edge_color="#ddd",
-            font_color='black')
+    # Draw edges first with increased width and alpha
+    nx.draw_networkx_edges(project_graph, pos,
+                          edge_color="#666666",
+                          width=2,
+                          alpha=0.6)
+
+    # Draw nodes and labels
+    nx.draw_networkx_nodes(project_graph, pos,
+                          node_size=1200,
+                          node_color="#7c5fff",
+                          alpha=0.9)
+
+    nx.draw_networkx_labels(project_graph, pos,
+                           font_size=8,
+                           font_weight='bold',
+                           font_color='black')
+
+    plt.title("Project Relationship Network", pad=20, fontsize=14, fontweight='bold')
 
     img = io.BytesIO()
-    plt.savefig(img, format='png', bbox_inches='tight')
+    plt.savefig(img, format='png', bbox_inches='tight', dpi=300)  # Increased DPI for better quality
     img.seek(0)
     graph_url = base64.b64encode(img.getvalue()).decode()
     plt.close()

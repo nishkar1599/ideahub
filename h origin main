@@ -1,0 +1,5 @@
+[33mcommit 9c48761a7aa9b813984679bff0a7f7a2cd6cb6ca[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Nishikanta <nishkar2016@gmail.com>
+Date:   Mon Apr 7 22:25:54 2025 +0530
+
+    Updated project recommendations with improved domain weighting and cleaned up domain display. Key changes: 1) Increased domain weight to 4, 2) Simplified technology representation, 3) Cleaned domain names in dropdown, 4) Updated graph visualization
