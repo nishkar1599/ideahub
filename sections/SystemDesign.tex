@@ -1,0 +1,94 @@
+\section{System Design}
+
+\subsection{Data Structure Design}
+The system uses a structured CSV file (`idea_hub_project.csv`) to store project information. The data structure includes the following key fields:
+\begin{itemize}
+    \item Title: Project name
+    \item Domain: Project category (e.g., Machine Learning, Web Development)
+    \item Difficulty: Project complexity level
+    \item Technologies: Comma-separated list of technologies used
+    \item GitHub Link: Repository URL
+    \item YouTube Link: Tutorial video URL
+    \item Description: Project overview
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/data_structure.png}
+\caption{CSV Data Structure for IdeaHub}
+\end{figure}
+
+\subsection{Data Flow Diagram}
+\usetikzlibrary{positioning}
+\begin{tikzpicture}[
+  node distance=2cm and 4cm,
+  box/.style={rectangle, draw, minimum height=1.2cm, minimum width=3cm, align=center},
+  arrow/.style={-latex, thick}
+]
+
+% Nodes
+\node[box] (user) {User\\(Selects Domain and Difficulty)};
+\node[box, below=of user] (filter) {1. Data Filtering\\(Pandas DataFrame Operations)};
+\node[box, below=of filter] (graph) {2. Graph Construction\\(NetworkX Graph Generation)};
+\node[box, below=of graph] (analysis) {3. SNA Analysis\\(Centrality Measures)};
+
+% Visualization and Results
+\node[box, right=3cm of analysis] (visualize) {4. Graph Visualization\\(Matplotlib)};
+\node[box, below=of analysis] (recommend) {5. Generate Recommendations\\(Technology Weighting)};
+\node[box, below=of recommend] (display) {6. Display Results\\(Projects and Visualizations)};
+\node[box, right=6cm of display] (output) {User\\(Receives Recommendations)};
+
+% Arrows
+\draw[arrow] (user) -- (filter);
+\draw[arrow] (filter) -- (graph);
+\draw[arrow] (graph) -- (analysis);
+\draw[arrow] (analysis.east) -- (visualize.west);
+\draw[arrow] (analysis.south) -- (recommend);
+\draw[arrow] (recommend) -- (display);
+\draw[arrow] (display) -- (output);
+
+% Data Flow
+\node[box, left=3cm of filter] (csv) {CSV Data\\Source};
+\draw[arrow] (csv) -- (filter);
+
+\end{tikzpicture}
+
+\subsection{System Architecture}
+The system follows a modular architecture with the following components:
+
+\textbf{Data Layer}:
+\begin{itemize}
+    \item CSV file storage
+    \item pandas DataFrame for data manipulation
+    \item NetworkX graph structures
+\end{itemize}
+
+\textbf{Processing Layer}:
+\begin{itemize}
+    \item Domain and difficulty filtering
+    \item Technology weighting system
+    \item Social Network Analysis
+    \item Graph visualization generation
+\end{itemize}
+
+\textbf{Presentation Layer}:
+\begin{itemize}
+    \item Flask web interface
+    \item Interactive graph visualizations
+    \item Project recommendation display
+\end{itemize}
+
+\subsection{Recommendation Algorithm}
+The recommendation system uses a multi-step process:
+\begin{enumerate}
+    \item Initial filtering based on domain and difficulty
+    \item Graph construction using NetworkX
+    \item Calculation of centrality measures:
+    \begin{itemize}
+        \item Degree Centrality
+        \item Betweenness Centrality
+        \item Eigenvector Centrality
+    \end{itemize}
+    \item Technology-based weighting
+    \item Final recommendation generation
+\end{enumerate}

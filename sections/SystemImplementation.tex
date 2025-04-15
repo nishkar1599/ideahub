@@ -1,0 +1,51 @@
+\section{System Implementation}
+
+\textbf{Project Selection Module}
+\begin{itemize}
+    \item Allows users to select from predefined domains (e.g., AI, Web Development, CVIP) and difficulty levels (Beginner, Intermediate, Advanced).
+    \item Provides a user-friendly interface for domain and difficulty selection.
+    \item Implements input validation to ensure proper selection before processing.
+\end{itemize}
+
+\textbf{Project Recommendation Module}
+\begin{itemize}
+    \item Filters projects based on selected domain and difficulty level using pandas DataFrame operations.
+    \item Implements Social Network Analysis (SNA) using NetworkX to analyze project relationships.
+    \item Calculates multiple centrality measures (degree, betweenness, eigenvector) for project recommendations.
+    \item Applies technology weighting system to prioritize projects based on their technical complexity.
+    \item Displays project recommendations with relevant GitHub and YouTube links.
+\end{itemize}
+
+\textbf{Graph Visualization Module}
+\begin{itemize}
+    \item Generates interactive graph visualizations using Matplotlib.
+    \item Displays project relationships and connections.
+    \item Highlights selected projects and their relationships with other projects.
+    \item Provides visual representation of the recommendation network.
+\end{itemize}
+
+\textbf{Screenshots}
+
+The landing page of IdeaHub provides a simple interface where users can select their domain of interest and difficulty level to fetch relevant project recommendations. The figure below shows the selection interface with domain and difficulty options.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/ex_landing.png}
+\caption{IdeaHub Project Selection Interface}
+\end{figure}
+
+When recommendations are found, users are presented with a list of relevant projects along with their descriptions and resource links. The system also provides graph visualizations showing the relationships between projects.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/rec.png}
+\caption{Project Recommendations and Graph Visualization}
+\end{figure}
+
+If no recommendations are found for the selected criteria, users are shown an appropriate message indicating that no projects match their selection.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/error.png}
+\caption{No Recommendations Found Message}
+\end{figure}
